@@ -1,0 +1,42 @@
+{
+  "name": "posh-cloud",
+  "version": "1.0.0",
+  "description": "Serverless Backend Service for POSH",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "nodemon -r dotenv/config index.js dotenv_config_path=.env_local dotenv_config_debug=true",
+    "gcloud-config": "gcloud run configurations list",
+    "gcloud-deploy": "gcloud run deploy",
+    "deploy": "git add . && git commit -m \"update\" && git push && gcloud config set project posh-test-4cf65 && gcloud run deploy"
+  },
+  "engines": {
+    "node": ">=12.0.0"
+  },
+  "author": "Harris Khawar",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "@google-cloud/firestore": "^5.0.2",
+    "@pdf-lib/fontkit": "^1.1.1",
+    "@slack/web-api": "^6.12.0",
+    "axios": "^0.27.2",
+    "cors": "^2.8.5",
+    "date-fns": "^2.29.1",
+    "dotenv": "^16.0.3",
+    "expo-server-sdk": "^3.7.0",
+    "express": "^4.18.2",
+    "fetch": "^1.1.0",
+    "firebase-admin": "^11.4.1",
+    "jspdf": "^2.5.1",
+    "node-fetch": "^2.7.0",
+    "pdf-lib": "^1.17.1",
+    "smartcar": "^9.2.1",
+    "stripe": "^11.6.0",
+    "twilio": "^3.79.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}
