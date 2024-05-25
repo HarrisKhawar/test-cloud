@@ -40,27 +40,30 @@ const create_stripe_invoice = async (request, response) => {
     // Get Customer
     const customer = await getDocument("Customers", invoice.customer.id);
 
+    // Create Invoice
     const stripeInvoice = await stripe.invoices.create({
       customer: customer.stripeId,
       collection_method: "send_invoice",
-      description: invoice.description,
       metadata: {
         invoiceId: invoice.id,
       },
       days_until_due: invoice.days_until_due,
-      amount_due: invoice.amount,
-      lines: {
-        data: [
-          {
-            description: invoice.description,
-            amount: invoice.amount,
-            currency: "usd",
-            quantity: 1,
-            amount_exclude_tax: invoice.amount,
-          },
-        ],
-      },
+      pending_invoice_items_behavior: "exclude",
     });
+
+    console.log("stripeInvoice", stripeInvoice.id);  
+
+    // Add Item to Invoice
+    await stripe.invoiceItems.create({
+      customer: customer.stripeId,
+      invoice: stripeInvoice.id,
+      amount: Number(invoice.amount) * 100,
+      description: invoice.description,
+      currency: "usd",
+    });
+
+    // Finalize Invoice
+    await stripe.invoices.finalizeInvoice(stripeInvoice.id);
 
     // Send Invoice and Get Link
     const sendInvoice = await stripe.invoices.sendInvoice(stripeInvoice.id);

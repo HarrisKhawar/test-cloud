@@ -1,7 +1,5 @@
 const adminIds = [
-    "QcHfpSTS4lUg3nwndsFPXf5C9Do2", // harris@poshcars.io
-    "bvwGYqE91hbv1IghtwJbyfC20f83", // selim@poshcars.io
-    "zd8CmvDADYdKMThAeSzQrpmrVcs1", // abdul@poshcars.io
+    "X3FdJjXFaLXjO9IovHu96S1sYzb2", // harris@poshcars.io
 ]
 
 module.exports = { adminIds }

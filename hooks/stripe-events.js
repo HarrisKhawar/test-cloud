@@ -14,10 +14,8 @@ const stripe_events = async (request, response) => {
     logInfo("stripe_webhook", "Webhook received.");
 
     // Grab the signature from the header
-    const endpointSecret = "whsec_e5cd3e638624327f03cf9f2618e6d716e4ac17ed8a3bbeef0572ba9cdc52d660";
+    const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
     const sig = request.headers["stripe-signature"];
-    console.log(sig);
-    console.log(request.body);
 
     // Construct the event
     const event = stripe.webhooks.constructEvent(
@@ -30,11 +28,14 @@ const stripe_events = async (request, response) => {
     switch (event.type) {
       case "invoice.payment_succeeded":
         const invoice = event.data.object;
-        const payment = await update_payment_status(invoice.id, "succeeded");
-        logSuccess(
-          "stripe_webhook",
-          "Invoice payment succeeded: " + payment.id
-        );
+        const invoiceId = invoice.metadata.invoiceId;
+        if (invoiceId) {
+          const payment = await update_payment_status(invoiceId, "succeeded");
+          logSuccess(
+            "stripe_webhook",
+            "Invoice payment succeeded: " + payment.id
+          );
+        }
         break;
       default:
         logInfo("stripe_webhook", "Unhandled event type: " + event.type);

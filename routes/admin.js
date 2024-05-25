@@ -150,10 +150,6 @@ router.post("/add-payment", (req, res) => {
   const handler = require("../admin/payments/add-payment");
   handler(req, res);
 });
-router.post("/send-invoice-link", (req, res) => {
-  const handler = require("../admin/payments/send-invoice-link");
-  handler(req, res);
-});
 router.post("/charge-invoice", (req, res) => {
   const handler = require("../admin/payments/charge-invoice");
   handler(req, res);
