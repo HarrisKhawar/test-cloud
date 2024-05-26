@@ -1,6 +1,3 @@
-const {
-  createPaymentIntent,
-} = require("../../util/stripe/create-payment-intent");
 const { handleRequest } = require("../request-handling/handle-request");
 const { logError, logSuccess } = require("../../util/logs/logging");
 const { getCustomer } = require("../../models/get-customer");
